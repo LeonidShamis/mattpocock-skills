@@ -12,7 +12,7 @@ Issues and specs for this repo live in a [Beads](https://github.com/gastownhall/
 - **Close**: `bd close <id> --reason "..."`. Reopen with `bd reopen <id>`.
 - **Blocking edges**: `bd dep add <blocked-id> <blocker-id>` (the first argument depends on the second). `bd dep tree <id>` shows the graph. A dependency-blocked issue drops out of `bd ready` until every blocker is closed.
 
-`bd` auto-discovers the workspace from the repo's `.beads/` directory; run it from anywhere inside the clone. Issue data lives in a local Dolt database that git does not track (only `.beads/` config files are committed), so issues travel through Beads itself (`bd export` / `bd import` JSONL snapshots, Dolt remotes, or federation), not through commits. On a fresh clone, `bd bootstrap` sets the database up non-destructively.
+`bd` auto-discovers the workspace from the repo's `.beads/` directory; run it from anywhere inside the clone. Issue data lives in a local Dolt database that git does not track (only `.beads/` config files are committed), so issues travel through Beads itself, not through commits: `bd dolt push` syncs the database to the repo's git remote (on first run it auto-configures a Dolt remote from the git origin and stores the data under `refs/dolt/data`, separate from the code branches), `bd dolt pull` fetches it back, and `bd export` / `bd import` move JSONL snapshots where a remote is not an option. On a fresh clone, `bd bootstrap` sets the database up non-destructively.
 
 ## Triage state
 
